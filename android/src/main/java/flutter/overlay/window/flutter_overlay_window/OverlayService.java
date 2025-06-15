@@ -127,6 +127,19 @@ public class OverlayService extends Service implements View.OnTouchListener {
         flutterView.setFocusable(true);
         flutterView.setFocusableInTouchMode(true);
         flutterView.setBackgroundColor(Color.TRANSPARENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        flutterView.setRenderEffect(null); // Optional safeguard
+        flutterView.setImportantForContentCapture(View.IMPORTANT_FOR_CONTENT_CAPTURE_NO);
+        flutterView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        flutterView.setFocusable(false);
+        flutterView.setFocusableInTouchMode(false);
+    
+        // ⬇️ Baris paling penting
+        flutterView.setExcludeFromCapture(true);
+        }
+
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         layoutParams.setExcludeFromCapture(true)
         }
