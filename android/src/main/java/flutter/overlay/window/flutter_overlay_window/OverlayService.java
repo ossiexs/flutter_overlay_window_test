@@ -124,25 +124,16 @@ public class OverlayService extends Service implements View.OnTouchListener {
         flutterView = new FlutterView(getApplicationContext(), new FlutterTextureView(getApplicationContext()));
         flutterView.attachToFlutterEngine(FlutterEngineCache.getInstance().get(OverlayConstants.CACHED_TAG));
         flutterView.setFitsSystemWindows(true);
-        flutterView.setFocusable(true);
-        flutterView.setFocusableInTouchMode(true);
         flutterView.setBackgroundColor(Color.TRANSPARENT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        flutterView.setRenderEffect(null); // Optional safeguard
-        flutterView.setImportantForContentCapture(View.IMPORTANT_FOR_CONTENT_CAPTURE_NO);
-        flutterView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        flutterView.setFocusable(false);
-        flutterView.setFocusableInTouchMode(false);
-    
-        // ⬇️ Baris paling penting
-        flutterView.setExcludeFromCapture(true);
-        }
-
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        layoutParams.setExcludeFromCapture(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flutterView.setExcludeFromCapture(true);
+            flutterView.setImportantForContentCapture(View.IMPORTANT_FOR_CONTENT_CAPTURE_NO);
+            flutterView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            flutterView.setFocusable(false);
+            flutterView.setFocusableInTouchMode(false);
         }
+
         flutterChannel.setMethodCallHandler((call, result) -> {
             if (call.method.equals("updateFlag")) {
                 String flag = call.argument("flag").toString();
